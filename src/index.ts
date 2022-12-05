@@ -1,14 +1,16 @@
-import express from 'express';
-import { userRouter } from './routers/user.router';
+import { generateServer } from './app/generate-server';
+import { userController } from './app/users/user.controller';
 
-const app = express();
+async function main() {
+    const port = 3000;
 
-const port = 3000;
+    const app = generateServer();
 
-app.use(express.json());
+    app.use('/users', userController);
 
-app.use('/users', userRouter);
+    app.listen(port, () => {
+        console.info(`Server started on port ${port}`);
+    });
+}
 
-app.listen(port, () => {
-    console.info(`Server started on port ${port}`);
-});
+main();
