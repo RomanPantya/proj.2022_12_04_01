@@ -17,3 +17,12 @@ export async function createUser(
 
     return result as { id: number };
 }
+
+export async function getAll(
+    connection: PoolClient,
+) {
+    const { rows } = await connection.query(`
+    select * from users`);
+
+    return rows;
+}

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { createUser } from './user.service';
+import { createUser, getAll } from './user.service';
 
 const router = Router();
 
@@ -9,6 +9,15 @@ router.post('/', async (req, res) => {
 
     res.json({
         message: 'Should create user',
+        data: result,
+    });
+});
+
+router.get('/', async (req, res) => {
+    const result = await getAll(req.db);
+
+    res.json({
+        message: 'Thats all users',
         data: result,
     });
 });
