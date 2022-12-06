@@ -26,3 +26,27 @@ export async function getAll(
 
     return rows;
 }
+
+export async function getOne(
+    connection:PoolClient,
+    userId: string,
+) {
+    const { rows } = await connection.query(`
+    select * from users
+    where id = $1
+    `, [userId]);
+
+    return rows;
+}
+
+export async function removeOne(
+    connection:PoolClient,
+    userId: string,
+) {
+    const { rows } = await connection.query(`
+    delete from users where id = $1
+    returning *
+  `, [userId]);
+
+    return rows;
+}

@@ -1,5 +1,7 @@
 import { Router } from 'express';
-import { createUser, getAll } from './user.service';
+import {
+    createUser, getAll, getOne, removeOne,
+} from './user.service';
 
 const router = Router();
 
@@ -13,11 +15,31 @@ router.post('/', async (req, res) => {
     });
 });
 
+router.get('/:id', async (req, res) => {
+    const { id: userId } = req.params;
+    const result = await getOne(req.db, userId);
+
+    res.json({
+        message: "It's your user",
+        data: result,
+    });
+});
+
 router.get('/', async (req, res) => {
     const result = await getAll(req.db);
 
     res.json({
         message: 'Thats all users',
+        data: result,
+    });
+});
+
+router.delete('/:id', async (req, res) => {
+    const { id: userId } = req.params;
+    const result = await removeOne(req.db, userId);
+
+    res.json({
+        message: 'Thats user was removed',
         data: result,
     });
 });
