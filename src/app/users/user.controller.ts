@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import {
-    createUser, getAll, getOne, removeOne,
+    createUser, getAll, getOne, removeOne, updateOne,
 } from './user.service';
 
 const router = Router();
@@ -30,6 +30,17 @@ router.get('/', async (req, res) => {
 
     res.json({
         message: 'Thats all users',
+        data: result,
+    });
+});
+
+router.put('/:id', async (req, res) => {
+    const { id: userId } = req.params;
+    const { name } = req.body;
+    const result = await updateOne(req.db, userId, name);
+
+    res.json({
+        message: 'Thats user was update',
         data: result,
     });
 });
